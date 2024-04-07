@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+
+        <style>
+            body{
+                margin: 0;
+                border: 0;
+                background-color: #000;
+                color: #eee;
+                font-family: 'Courier New', monospace;
+            }
+
+            .centerFrame{
+                position: absolute;
+                width: 50%;
+                left: 25%;
+                height: 90%;
+                top: 5%;
+                background-color: #222;
+                border-radius: 20px;
+                border: 1px solid white;
+                box-shadow: 0px 0px 2px 2px #eee;
+            }
+
+            .upload{
+                border: 1px solid white;
+                width: calc(100% - 70px);
+                height: calc(25% - 70px);
+            }
+
+            .result{
+                padding-top: 0px;
+                border: 1px solid white;
+                width: calc(100% - 70px);
+                height: calc(45% - 70px);
+            }
+            .inner{
+                margin: 20px;
+                padding: 15px;
+            }
+            .title{
+                font-size: x-large;
+                text-align: center;
+            }
+        </style>
+        <script>
+            
+        function submitImage(event){
+			event.preventDefault();
+			
+			// var image = document.getElementById("image").files[0];
+			var form =  document.getElementsByTagName("form")[0];
+			console.log(form);
+			const formData = new FormData(form);
+            console.log(formData);
+			const fetchOptions = {
+				method: "post",
+				body:formData
+			};
+
+			fetch("/convert", fetchOptions).then(res => res.blob()).then(data => {
+				console.log(data, typeof(data));
+                let url = window.URL.createObjectURL(data);
+                let link = document.getElementById("fileDownloadButton");
+                link.href = url;
+                link.setAttribute("download", "image.sif");
+                link.style.display = "block";
+                
+                /*
+                data.arrayBuffer().then(
+                    binaryData => {
+                        intdata = new Uint32Array(binaryData);
+                        let hex = "";
+                        console.log(intdata);
+                        for(let byte of intdata ){
+                            hex += " " + byte.toString(16);
+                            console.log(hex);
+                        }
+                        document.getElementById("binaryData").innerHTML = hex;
+                        //asd
+                    }
+                )*/
+			});
+			
+		}
+        </script>
+    </head>
+
+    <body>
+        <div class = "centerFrame">
+            <div class = "inner title">
+                Simplistic Image Format
+            </div>
+            <div class = "inner explanation">
+                Done are the days of complicated image formats, introducing, the SIF format, custom made in simple python. Supports compression(LZMA for now), and grayscale, RGB, RGBA formats.
+            </div>
+            <div class = "inner upload">
+                <form id = "uploadImageForm" action="/convert" method="post" enctype="multipart/form-data">
+                    <input type="file" name = "image"/>
+                    <input id="submitButton" type = "submit" value="submit"/>
+                </form>
+            </div>
+
+            <div class = "inner result">
+                <a id = "fileDownloadButton" style="display: none;">Download Image</a>
+                <div id = "binaryData">
+
+                </div>
+            </div>
+        </div>
+        
+        <script>
+		    document.getElementById("uploadImageForm").addEventListener("submit", submitImage);
+        </script>
+    </body>
+</html>
