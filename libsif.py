@@ -123,19 +123,19 @@ class SimplisticImageFormat:
 
 if __name__ == "__main__":
 
-    # testImage = Image.open("C:\\Users\\avani\\Downloads\\noir.png")
+    # testImage = Image.open("flag.png")
     # i = SimplisticImageFormat.fromImage(testImage)
-    # i.save("noir.SIF")
+    # i.save("flag.SIF")
 
-    file = SimplisticImageFormat.open("C:\\Users\\avani\\Downloads\\picture.SIF")
-    print(file.data, len(file.data), type(file.data[0]))
-    pix = []
-    for i in range(0, len(file.data), file.width):
-        pix.append(file.data[i:i+file.width])
+    # file = SimplisticImageFormat.open("C:\\Users\\avani\\Downloads\\picture.SIF")
+    # print(file.data, len(file.data), type(file.data[0]))
+    # pix = []
+    # for i in range(0, len(file.data), file.width):
+    #     pix.append(file.data[i:i+file.width])
     
     
-    import numpy as np
-    image = Image.fromarray(np.array(pix, dtype=np.uint8), mode=file.mode)
-    # print((np.array(testImage.getdata()) == np.array(file.data)).all(), np.array(testImage.getdata()).shape, np.array(file.data).shape)
-    # print(np.array(pix).shape)
-    image.show()
+    # import numpy as np
+    # image = Image.fromarray(np.array(pix, dtype=np.uint8), mode=file.mode)
+    # # print((np.array(testImage.getdata()) == np.array(file.data)).all(), np.array(testImage.getdata()).shape, np.array(file.data).shape)
+    # # print(np.array(pix).shape)
+    # image.show()
